@@ -1,0 +1,110 @@
+---
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<title>为自由而工作 - 赵世令</title>
+{% include head.tpl %}
+<link rel="stylesheet" type="text/css" href="/assets/css/works.css" />
+</head>
+
+<body class="page-type-timeline">
+
+<aside>
+	<h1><a href="/"><img src="{{ site.meta.gravatar }}{{ site.meta.author.gravatar }}?s=32" width="32" height="32" /></a><span data-translate="work-for-free">工作，是为了自由</span></h1>
+
+	<div id="skills" class="block">
+		<h3 data-translate="programming-skills">编程技能</h3>
+		<ul>
+			<li>
+				<div style="width:80%"></div>
+				<p>Java</p>
+			</li>
+			<li>
+				<div style="width:70%"></div>
+				<p>NodeJs</p>
+			</li>
+			<li>
+				<div style="width:70%"></div>
+				<p>Mysql</p>
+			</li>
+			<li>
+				<div style="width:70%"></div>
+				<p>Redis</p>
+			</li>
+			<li>
+				<div style="width:50%"></div>
+				<p>Scala</p>
+			</li>
+			<li>
+				<div style="width:50%"></div>
+				<p>Python</p>
+			</li>
+		</ul>
+	</div>
+
+	<div id="tools" class="block">
+		<h3 data-translate="using-tools">使用工具</h3>
+		<ul>
+			<li><i class="fa fa-apple"></i><span>Mac</span></li>
+			<li><i>S</i><span>Sublime</span></li>
+			<li><i class="fa fa-git-square"></i><span>Git</span></li>
+			<li><i class="icon-chrome"></i><span>Chrome</span></li>
+			<li><i class="icon-firefox"></i><span>Firefox</span></li>
+			<li><i class="fa fa-google"></i><span>Google</span></li>
+			<li><i class="fa fa-github"></i><span>GitHub</span></li>
+			<li><i class="fa fa-bitbucket"></i><span>BitBucket</span></li>
+			<li><i class="fa fa-trello"></i><span>Trello</span></li>
+			<li><i class="fa fa-stack-overflow"></i><span>StackOverflow</span></li>
+		</ul>
+	</div>
+
+	<div id="contact" class="block">
+		<p><span data-translate="contact-me-description">个人长期承接各类 Web 开发，如果您能提供的时薪不低于$50，请联系我的邮箱：</span> <a href="mailto:" class="mail"></a></p>
+	</div>
+</aside>
+
+<div class="main">
+	<div id="timeline">
+		<p class="line-end" data-translate="recently">最近</p>
+		<ul class="item-list">
+			{% for item in site.categories.works %}
+			<li class="item">
+				<div class="meta">
+					<i class="fa fa-{{item.icon}}"></i>
+					<p class="date">{{item.date | date: "%Y-%m"}}</p>
+					<i class="arrow-left"></i>
+				</div>
+				<div class="content">
+					<header>
+						<div class="links">
+							{% if item.gitrepo %}<iframe src="http://ghbtns.com/github-btn.html?user=mytharcher&amp;repo={{item.gitrepo}}&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="82" height="20" class="link-item"></iframe>{% endif %}
+						</div>
+						<h3>{% if item.link %}<a href="{{item.link}}" target="_blank">{{item.title}}</a>{% else %}{{item.title}}{% endif %}</h3>
+						<p class="tags">
+						{% for tag in item.tags %}<span class="tag">{{tag}}</span>{% endfor %}
+						</p>
+					</header>
+					{% if item.figures %}
+					{% assign figures_length = item.figures | size %}
+					<figure class="{% if figures_length > 1 %}multi{% endif %}">
+						{% for img in item.figures %}<img src="{{img.src}}" {% if img.height %}height="{{img.height}}" {% endif %} />{% endfor %}
+					</figure>
+					{% endif %}
+					<article>
+					{{item.content}}
+					</article>
+				</div>
+			</li>
+			{% endfor %}
+		</ul>
+		<p class="line-end">...</p>
+	</div>
+</div>
+
+<script type="text/javascript" src="http://elfjs.qiniudn.com/code/elf-0.5.0.min.js"></script>
+<script type="text/javascript" src="/assets/js/site.js"></script>
+{% include baidu-stats.tpl %}
+
+</body>
+</html>

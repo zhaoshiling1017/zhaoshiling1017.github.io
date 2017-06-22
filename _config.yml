@@ -1,0 +1,55 @@
+markdown: kramdown
+safe: false
+permalink: /:categories/:title
+exclude:
+  - README.md
+
+defaults:
+  -
+    scope:
+        path: blog/_posts
+        type: posts
+    values:
+        permalink: blog/posts/:title
+        layout: post
+  -
+    scope:
+        path: discovery/_posts
+    values:
+        layout: post
+
+blog:
+    host: blog.lenzhao.com
+    name: 闭门造轮子
+    desc: 造轮子工程师的代码笔记
+
+    category:
+        thinking: 闭门思考
+        experience: 问题即经验
+        criticism: 非专业吐槽
+        communication: 交流分享
+    categories:
+      - name:  thinking
+        title: 闭门思考
+
+      - name:  experience
+        title: 问题即经验
+
+      - name:  criticism
+        title: 非专业吐槽
+
+      - name: communication
+        title: 交流分享
+
+meta:
+    author:
+        name: lenzhao
+        email: lenzhao@yahoo.com
+        disqus: tech-justlog-me                     # Disqus缩略标识
+        gcse: 000346898720731947188:13h55x32l0y     # Google自定义搜索标识ID
+        github: zhaoshiling1017                     # GitHub账号
+        gravatar: e7528ac63b4ca512572e99bd714e74b0  # Gravatar头像标识
+
+    disqus: disqus.com/embed.js                     # Disqus评论的JS地址
+    gapi: http://www.google.com/jsapi               # Google API地址
+    gravatar: http://en.gravatar.com/avatar/        # Gravatar头像服务器地址
