@@ -74,7 +74,5 @@ Reveal.initialize({
 });
 
 </script>
-{% include baidu-stats.tpl %}
-
 </body>
 </html>

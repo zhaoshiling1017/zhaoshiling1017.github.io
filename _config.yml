@@ -20,8 +20,8 @@ defaults:
 
 blog:
     host: blog.lenzhao.com
-    name: 闭门造轮子
-    desc: 造轮子工程师的代码笔记
+    name: 匠人的艺术
+    desc: 匠人的艺术代码笔记
 
     category:
         thinking: 闭门思考

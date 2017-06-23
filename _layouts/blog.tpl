@@ -17,7 +17,7 @@
 	{{ content }}
 
 	<footer>
-		<p>&copy; Since 2012 <a href="https://www.lenzhao.com/">lenzhao.com</a></p>
+		<p>&copy; Since 2012 <a href="http://blog.lenzhao.com/">blog.lenzhao.com</a></p>
 	</footer>
 </div>
 
@@ -42,7 +42,7 @@
 			{% if site.meta.author.gravatar %}<img src="{{ site.meta.gravatar}}{{ site.meta.author.gravatar }}?s=48" />{% endif %}
 			<figcaption><strong>{{ site.meta.author.name }}</strong></figcaption>
 		</figure>
-		<p>由于经常造各种轮子，所以自诩为前端造轮子工程师。各种形式主义，工具癖，规划控，纠结帝……以及重度拖延症患者。</p>
+		<p>永远不要（把自己遇到的问题）归因于（他人的）恶意，这恰恰说明了（你自己的）无能。</p>
 	</div>
 
 	<div class="block block-license">
@@ -65,7 +65,7 @@
 	</div>
 </aside>
 
-<script type="text/javascript" src="http://elfjs.qiniudn.com/code/elf-0.5.0.min.js"></script>
+<script type="text/javascript" src="http://orxw8wy2g.bkt.clouddn.com/elf-0.5.0.min.js"></script>
 <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
 <script src="/assets/js/site.js"></script>
 {% for script in page.scripts %}<script src="{{ script }}"></script>
@@ -78,7 +78,5 @@ site.VAR_SITE_NAME = '{{ site.name }}';
 site.VAR_GOOGLE_CUSTOM_SEARCH_ID = '{{ site.meta.author.gcse }}';
 site.TPL_SEARCH_TITLE = '#{0} / 搜索：#{1}';
 </script>
-{% include baidu-stats.tpl %}
-
 </body>
 </html>
