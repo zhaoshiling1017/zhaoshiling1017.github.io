@@ -20,14 +20,5 @@ category: thinking
 * `Epoll`没有最大并发的限制，上限是最大可以打开的文件数目，这个数字一般远大于2048，一般来说这个数目和系统内存关系很大，具体数目可以通过`cat /proc/sys/fs/file-max`查看。
 * `select`模型，当IO事件到来时，`select`会通知应用程序事件到来，然后应用程序必须轮询所有的FD集合，测试每个FD是否有事件发生，并处理事件，代码如下：
 
-	int res = select(maxfd+1, &readfds, NULL, NULL, 120);  
-	if (res > 0)  
-        {  
-            for (int i = 0; i < MAX_CONNECTION; i++)  
-            {  
-                if (FD_ISSET(allConnection[i], &readfds))  
-                {  
-                    handleEvent(allConnection[i]);  
-                }  
-            }  
-        }
+ 	int res = select(maxfd+1, &readfds, NULL, NULL, 120);  
+	
