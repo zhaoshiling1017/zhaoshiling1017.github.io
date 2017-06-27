@@ -1,0 +1,365 @@
+---
+layout: post
+title: 二叉树介绍
+category: thinking
+---
+
+
+# 二叉树介绍
+树是一种比较重要的数据结构，尤其是二叉树。二叉树是一种特殊的树，在二叉树中每个节点最多有两个子节点，一般称为左子节点和右子节点（或左孩子和右孩子），并且二叉树的子树有左右之分，其次序不能任意颠倒。二叉树是递归定义的，因此，与二叉树有关的题目基本都可以用递归思想解决，当然有些题目非递归解法也应该掌握，如非递归遍历节点等等。本文努力对二叉树相关题目做一个较全的整理总结，希望对找工作的同学有所帮助。
+
+# 二叉查找树介绍
+二叉查找树（Binary Search Tree），（又：二叉搜索树，二叉排序树）它或者是一棵空树，或者是具有下列性质的二叉树： 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值； 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值； 它的左、右子树也分别为二叉排序树。
+
+二叉树节点定义如下：
+
+```
+struct BinaryTreeNode
+{
+    int m_nValue;
+    BinaryTreeNode* m_pLeft;
+    BinaryTreeNode* m_pRight;
+};
+```
+
+## 求二叉树中的节点个数
+
+递归解法：
+
+> * 如果二叉树为空，节点个数为0
+> * 如果二叉树不为空，二叉树节点个数 = 左子树节点个数 + 右子树节点个数 + 1
+
+参考代码如下：
+
+```
+int GetNodeNum(BinaryTreeNode *pRoot)  
+{  
+    if(pRoot == NULL) // 递归出口  
+        return 0;  
+    return GetNodeNum(pRoot->m_pLeft) + GetNodeNum(pRoot->m_pRight) + 1;  
+}  
+```
+
+## 求二叉树的深度
+
+递归解法：
+
+> * 如果二叉树为空，二叉树的深度为0
+> * 如果二叉树不为空，二叉树的深度 = max(左子树深度， 右子树深度) + 1
+
+参考代码如下：
+
+```
+int GetDepth(BinaryTreeNode *pRoot)  
+{  
+    if(pRoot == NULL) // 递归出口  
+        return 0;  
+    int depthLeft = GetDepth(pRoot->m_pLeft);  
+    int depthRight = GetDepth(pRoot->m_pRight);  
+    return depthLeft > depthRight ? (depthLeft + 1) : (depthRight + 1);   
+}
+```
+
+## 前序遍历，中序遍历，后序遍历
+
+前序遍历递归解法：
+
+> * 如果二叉树为空，空操作
+> * 如果二叉树不为空，访问根节点，前序遍历左子树，前序遍历右子树
+
+参考代码如下：
+
+```
+void PreOrderTraverse(BinaryTreeNode *pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    Visit(pRoot); // 访问根节点  
+    PreOrderTraverse(pRoot->m_pLeft); // 前序遍历左子树  
+    PreOrderTraverse(pRoot->m_pRight); // 前序遍历右子树  
+}  
+```
+
+中序遍历递归解法：
+
+> * 如果二叉树为空，空操作。
+> * 如果二叉树不为空，中序遍历左子树，访问根节点，中序遍历右子树
+
+```
+void InOrderTraverse(BinaryTreeNode *pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    InOrderTraverse(pRoot->m_pLeft); // 中序遍历左子树  
+    Visit(pRoot); // 访问根节点  
+    InOrderTraverse(pRoot->m_pRight); // 中序遍历右子树  
+}
+```
+
+后序遍历递归解法：
+
+> * 如果二叉树为空，空操作
+> * 如果二叉树不为空，后序遍历左子树，后序遍历右子树，访问根节点
+
+参考代码如下：
+
+```
+void PostOrderTraverse(BinaryTreeNode *pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    PostOrderTraverse(pRoot->m_pLeft); // 后序遍历左子树  
+    PostOrderTraverse(pRoot->m_pRight); // 后序遍历右子树  
+    Visit(pRoot); // 访问根节点  
+}  
+```
+
+## 分层遍历二叉树（按层次从上往下，从左往右）
+
+> 相当于广度优先搜索，使用队列实现。队列初始化，将根节点压入队列。当队列不为空，进行如下操作：弹出一个节点，访问，若左子节点或右子节点不为空，将其压入队列。
+
+```
+void LevelTraverse(BinaryTreeNode *pRoot)  
+{  
+    if(pRoot == NULL)  
+        return;  
+    queue<BinaryTreeNode *> q;  
+    q.push(pRoot);  
+    while(!q.empty())  
+    {  
+        BinaryTreeNode * pNode = q.front();  
+        q.pop();  
+        Visit(pNode); // 访问节点  
+        if(pNode->m_pLeft != NULL)  
+            q.push(pNode->m_pLeft);  
+        if(pNode->m_pRight != NULL)  
+            q.push(pNode->m_pRight);  
+    }  
+    return;  
+}  
+```
+## 求二叉树第K层的节点个数
+
+递归解法：
+
+> * 如果二叉树为空或者k<1返回0
+> * 如果二叉树不为空并且k==1，返回1
+> * 如果二叉树不为空且k>1，返回左子树中k-1层的节点个数与右子树k-1层节点个数之和
+
+参考代码如下：
+
+```
+int GetNodeNumKthLevel(BinaryTreeNode *pRoot, int k)  
+{  
+    if(pRoot == NULL || k < 1)  
+        return 0;  
+    if(k == 1)  
+        return 1;  
+    int numLeft = GetNodeNumKthLevel(pRoot->m_pLeft, k-1); // 左子树中k-1层的节点个数  
+    int numRight = GetNodeNumKthLevel(pRoot->m_pRight, k-1); // 右子树中k-1层的节点个数  
+    return (numLeft + numRight);  
+}  
+```
+
+## 求二叉树中叶子节点的个数
+
+递归解法：
+
+> * 如果二叉树为空，返回0
+> * 如果二叉树不为空且左右子树为空，返回1
+> * 如果二叉树不为空，且左右子树不同时为空，返回左子树中叶子节点个数加上右子树中叶子节点个数
+
+参考代码如下：
+
+```
+int GetLeafNodeNum(BinaryTreeNode *pRoot)  
+{  
+    if(pRoot == NULL)  
+        return 0;  
+    if(pRoot->m_pLeft == NULL && pRoot->m_pRight == NULL)  
+        return 1;  
+    int numLeft = GetLeafNodeNum(pRoot->m_pLeft); // 左子树中叶节点的个数  
+    int numRight = GetLeafNodeNum(pRoot->m_pRight); // 右子树中叶节点的个数  
+    return (numLeft + numRight);  
+}  
+```
+
+## 判断两棵二叉树是否结构相同
+
+不考虑数据内容。结构相同意味着对应的左子树和对应的右子树都结构相同。
+递归解法：
+
+> * 如果两棵二叉树都为空，返回真
+> * 如果两棵二叉树一棵为空，另一棵不为空，返回假
+> * 如果两棵二叉树都不为空，如果对应的左子树和右子树都同构返回真，其他返回假
+
+参考代码如下：
+
+```
+bool StructureCmp(BinaryTreeNode *pRoot1, BinaryTreeNode *pRoot2)  
+{  
+    if(pRoot1 == NULL && pRoot2 == NULL) // 都为空，返回真  
+        return true;  
+    else if(pRoot1 == NULL || pRoot2 == NULL) // 有一个为空，一个不为空，返回假  
+        return false;  
+    bool resultLeft = StructureCmp(pRoot1->m_pLeft, pRoot2->m_pLeft); // 比较对应左子树   
+    bool resultRight = StructureCmp(pRoot1->m_pRight, pRoot2->m_pRight); // 比较对应右子树  
+    return (resultLeft && resultRight);  
+}   
+```
+
+## 判断二叉树是不是平衡二叉树
+
+递归解法：
+
+> * 树为空，返回真
+> * 如果二叉树不为空，如果左子树和右子树都是AVL树并且左子树和右子树高度相差不大于1，返回真，其他返回假
+
+参考代码：
+
+```
+bool IsAVL(BinaryTreeNode * pRoot, int & height)  
+{  
+    if(pRoot == NULL) // 空树，返回真  
+    {  
+        height = 0;  
+        return true;  
+    }  
+    int heightLeft;  
+    bool resultLeft = IsAVL(pRoot->m_pLeft, heightLeft);  
+    int heightRight;  
+    bool resultRight = IsAVL(pRoot->m_pRight, heightRight);  
+    if(resultLeft && resultRight && abs(heightLeft - heightRight) <= 1) // 左子树和右子树都是AVL，并且高度相差不大于1，返回真  
+    {  
+        height = max(heightLeft, heightRight) + 1;  
+        return true;  
+    }  
+    else  
+    {  
+        height = max(heightLeft, heightRight) + 1;  
+        return false;  
+    }  
+}  
+```
+
+## 求二叉树的镜像
+
+递归解法：
+
+> * 如果二叉树为空，返回空
+> * 如果二叉树不为空，求左子树和右子树的镜像，然后交换左子树和右子树
+
+参考代码如下：
+
+```
+BinaryTreeNode * Mirror(BinaryTreeNode * pRoot)  
+{  
+    if(pRoot == NULL) // 返回NULL  
+        return NULL;  
+    BinaryTreeNode * pLeft = Mirror(pRoot->m_pLeft); // 求左子树镜像  
+    BinaryTreeNode * pRight = Mirror(pRoot->m_pRight); // 求右子树镜像  
+        // 交换左子树和右子树  
+    pRoot->m_pLeft = pRight;  
+    pRoot->m_pRight = pLeft;  
+    return pRoot;  
+}  
+```
+
+## 求二叉树中两个节点的最低公共祖先节点
+
+递归解法：
+
+> * 如果两个节点分别在根节点的左子树和右子树，则返回根节点
+> * 如果两个节点都在左子树，则递归处理左子树；如果两个节点都在右子树，则递归处理右子树
+
+参考代码如下：
+
+```
+bool FindNode(BinaryTreeNode * pRoot, BinaryTreeNode * pNode)  
+{  
+    if(pRoot == NULL || pNode == NULL)  
+        return false;  
+  
+    if(pRoot == pNode)  
+        return true;  
+  
+    bool found = FindNode(pRoot->m_pLeft, pNode);  
+    if(!found)  
+        found = FindNode(pRoot->m_pRight, pNode);  
+  
+    return found;  
+}  
+  
+BinaryTreeNode * GetLastCommonParent(BinaryTreeNode * pRoot,   
+                                     BinaryTreeNode * pNode1,   
+                                     BinaryTreeNode * pNode2)  
+{  
+    if(FindNode(pRoot->m_pLeft, pNode1))  
+    {  
+        if(FindNode(pRoot->m_pRight, pNode2))  
+            return pRoot;  
+        else  
+            return GetLastCommonParent(pRoot->m_pLeft, pNode1, pNode2);  
+    }  
+    else  
+    {  
+        if(FindNode(pRoot->m_pLeft, pNode2))  
+            return pRoot;  
+        else  
+            return GetLastCommonParent(pRoot->m_pRight, pNode1, pNode2);  
+    }  
+} 
+```
+
+递归解法效率很低，有很多重复的遍历，下面看一下非递归解法。
+非递归解法：
+
+> * 先求从根节点到两个节点的路径，然后再比较对应路径的节点就行，最后一个相同的节点也就是他们在二叉树中的最低公共祖先节点
+
+参考代码如下：
+
+```
+bool GetNodePath(BinaryTreeNode * pRoot, BinaryTreeNode * pNode,   
+                 list<BinaryTreeNode *> & path)  
+{  
+    if(pRoot == pNode)  
+    {     
+        path.push_back(pRoot);  
+        return true;  
+    }  
+    if(pRoot == NULL)  
+        return false;  
+    path.push_back(pRoot);  
+    bool found = false;  
+    found = GetNodePath(pRoot->m_pLeft, pNode, path);  
+    if(!found)  
+        found = GetNodePath(pRoot->m_pRight, pNode, path);  
+    if(!found)  
+        path.pop_back();  
+    return found;  
+}  
+BinaryTreeNode * GetLastCommonParent(BinaryTreeNode * pRoot, BinaryTreeNode * pNode1, BinaryTreeNode * pNode2)  
+{  
+    if(pRoot == NULL || pNode1 == NULL || pNode2 == NULL)  
+        return NULL;  
+    list<BinaryTreeNode*> path1;  
+    bool bResult1 = GetNodePath(pRoot, pNode1, path1);  
+    list<BinaryTreeNode*> path2;  
+    bool bResult2 = GetNodePath(pRoot, pNode2, path2);  
+    if(!bResult1 || !bResult2)   
+        return NULL;  
+    BinaryTreeNode * pLast = NULL;  
+    list<BinaryTreeNode*>::const_iterator iter1 = path1.begin();  
+    list<BinaryTreeNode*>::const_iterator iter2 = path2.begin();  
+    while(iter1 != path1.end() && iter2 != path2.end())  
+    {  
+        if(*iter1 == *iter2)  
+            pLast = *iter1;  
+        else  
+            break;  
+        iter1++;  
+        iter2++;  
+    }  
+    return pLast;  
+}
+```
