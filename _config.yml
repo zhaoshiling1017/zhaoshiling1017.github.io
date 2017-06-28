@@ -45,7 +45,7 @@ meta:
     author:
         name: lenzhao
         email: lenzhao@yahoo.com
-        disqus: tech-justlog-me                     # Disqus缩略标识
+        disqus: blog-lenzhao-com                    # Disqus缩略标识
         gcse: 000346898720731947188:13h55x32l0y     # Google自定义搜索标识ID
         github: zhaoshiling1017                     # GitHub账号
         gravatar: e7528ac63b4ca512572e99bd714e74b0  # Gravatar头像标识

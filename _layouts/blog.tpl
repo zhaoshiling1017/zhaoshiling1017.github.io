@@ -17,7 +17,7 @@
 	{{ content }}
 
 	<footer>
-		<p>&copy; Since 2012 <a href="http://blog.lenzhao.com/">blog.lenzhao.com</a></p>
+		<p>&copy; Since 2014 <a href="http://blog.lenzhao.com/">blog.lenzhao.com</a></p>
 	</footer>
 </div>
 
